@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ryzyy Store - Nokos & Jasa Share</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #121212; /* Background utama yang sangat gelap */
+            --secondary-dark: #1e1e1e; /* Latar belakang card/section */
+            --accent-color: #61dafb; /* Biru muda cerah untuk aksen (mirip warna es/digital) */
+            --text-light: #e0e0e0; /* Teks terang untuk kontras */
+            --highlight-text: #ffffff; /* Teks sangat terang untuk judul utama */
+            --border-dark: #3a3a3a; /* Garis pemisah */
+            --channel-bg: #25D366; /* Warna hijau untuk Saluran WhatsApp */
+            --channel-hover: #1da851;
+            --dana-color: #673AB7; /* Warna ungu untuk DANA */
+        }
+
+        body {
+            font-family: 'Lato', sans-serif; /* Font utama untuk body */
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.7; /* Tingkatkan line height untuk readability */
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Snowfall Effect */
+        .snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .snow {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.7); /* Salju sedikit lebih transparan */
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px) translateX(0px);
+                opacity: 0;
+            }
+            10% { opacity: 0.7; }
+            100% {
+                transform: translateY(100vh) translateX(var(--random-x-end));
+                opacity: 0;
+            }
+        }
+        /* End Snowfall Effect */
+
+        .container {
+            max-width: 980px; /* Lebar sedikit lebih besar */
+            margin: 50px auto; /* Margin atas-bawah lebih besar */
+            background-color: var(--secondary-dark);
+            padding: 40px; /* Padding lebih besar */
+            border-radius: 15px; /* Lebih bulat lagi */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); /* Shadow lebih intens */
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 30px;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif; /* Font klasik untuk judul utama */
+            color: var(--highlight-text);
+            font-size: 4em; /* Ukuran sangat besar */
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px var(--accent-color), 0 0 30px var(--accent-color);
+            letter-spacing: 2px; /* Jarak antar huruf */
+        }
+
+        header p {
+            font-size: 1.3em;
+            color: var(--text-light);
+            font-weight: 300; /* Lebih tipis */
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif; /* Font klasik untuk sub-judul */
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 35px;
+            font-size: 2.5em;
+            position: relative;
+            padding-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 120px; /* Lebih lebar */
+            height: 3px;
+            background-color: var(--highlight-text);
+            border-radius: 2px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background-color: rgba(30, 30, 30, 0.5); /* Sedikit lebih gelap & transparan */
+            border-radius: 12px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-dark);
+        }
+
+        .section ul {
+            list-style-type: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Item sedikit lebih lebar */
+            gap: 25px; /* Jarak antar item lebih besar */
+        }
+
+        .section ul li {
+            background-color: var(--primary-dark);
+            padding: 20px 30px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            border: 1px solid var(--border-dark);
+        }
+
+        .section ul li:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+            background-color: #2a2a2a;
+        }
+
+        .price {
+            font-weight: 700; /* Lebih tebal */
+            color: var(--accent-color);
+            font-size: 1.3em;
+        }
+
+        .note {
+            font-style: italic;
+            color: #bbb;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.05em;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            border: 1px solid var(--border-dark);
+        }
+
+        .owner-jasher {
+            border: 1px solid var(--border-dark);
+            padding: 35px;
+            margin-bottom: 35px;
+            border-radius: 12px;
+            background-color: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+        .owner-jasher:hover {
+            transform: translateY(-10px);
+        }
+
+        .owner-jasher h3 {
+            font-family: 'Playfair Display', serif; /* Font klasik untuk sub-judul */
+            color: var(--highlight-text);
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 2em;
+            position: relative;
+            padding-bottom: 18px;
+            text-transform: uppercase;
+        }
+        .owner-jasher h3::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background-color: var(--accent-color);
+            border-radius: 1px;
+        }
+
+        .owner-jasher.private h3 {
+            color: var(--accent-color);
+        }
+        .owner-jasher.private h3::after {
+             background-color: var(--highlight-text);
+        }
+
+        .feature-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .feature-list li {
+            background-color: transparent;
+            padding: 12px 0;
+            margin-bottom: 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.15);
+            display: flex;
+            align-items: flex-start;
+            box-shadow: none;
+            transition: none;
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        .feature-list li::before {
+            content: '❄️';
+            margin-right: 15px;
+            color: var(--accent-color);
+            font-size: 1.5em;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .qris-section {
+            text-align: center;
+            margin-top: 60px;
+            background-color: rgba(30, 30, 30, 0.5);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-dark);
+        }
+        .qris-section h2 {
+            color: var(--accent-color);
+        }
+        .qris-section h2::after {
+            background-color: var(--highlight-text);
+        }
+
+        .qris-section img {
+            max-width: 350px; /* Ukuran QRIS sedikit lebih besar */
+            width: 100%;
+            height: auto;
+            border: 8px solid var(--accent-color);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            background-color: var(--highlight-text);
+            padding: 8px;
+        }
+        .qris-info p {
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+        .qris-info em {
+            display: block;
+            margin-top: 20px;
+            font-size: 1em;
+            color: #aaa;
+        }
+        .qris-info a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .qris-info a:hover {
+            text-decoration: underline;
+            color: var(--highlight-text);
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 70px;
+            padding-top: 40px;
+            border-top: 2px solid var(--accent-color);
+        }
+
+        .contact-info h2 {
+            color: var(--highlight-text);
+            margin-bottom: 30px;
+        }
+        .contact-info h2::after {
+            background-color: var(--accent-color);
+        }
+
+        .contact-group {
+            display: flex;
+            flex-direction: column; /* Stack vertically on small screens */
+            gap: 25px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .contact-item {
+            background-color: var(--primary-dark);
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-dark);
+            width: fit-content; /* Sesuai konten */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .contact-item p {
+            margin: 0;
+            font-size: 1.15em;
+            color: var(--text-light);
+        }
+        .contact-item strong {
+            color: var(--accent-color);
+        }
+
+        .channel-button {
+            display: inline-block;
+            background-color: var(--channel-bg);
+            color: var(--highlight-text);
+            padding: 18px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.3em;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            letter-spacing: 0.5px;
+        }
+        .channel-button:hover {
+            background-color: var(--channel-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+        }
+        .channel-button:active {
+            transform: translateY(0);
+        }
+
+        .dana-number {
+            color: var(--dana-color);
+            font-weight: 700;
+        }
+
+
+        /* Responsive Adjustments */
+        @media (min-width: 769px) {
+            .contact-group {
+                flex-direction: row; /* Horizontal on larger screens */
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 25px;
+            }
+            header h1 {
+                font-size: 2.8em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .section ul {
+                grid-template-columns: 1fr;
+            }
+            .owner-jasher h3 {
+                font-size: 1.8em;
+            }
+            .channel-button {
+                padding: 15px 30px;
+                font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            header h1 {
+                font-size: 2.2em;
+                letter-spacing: 1px;
+            }
+            header p {
+                font-size: 1.1em;
+            }
+            h2 {
+                font-size: 1.6em;
+            }
+            .section ul li {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+            .price {
+                margin-top: 8px;
+                align-self: flex-end;
+            }
+            .owner-jasher h3 {
+                font-size: 1.5em;
+            }
+            .channel-button {
+                padding: 12px 25px;
+                font-size: 1.1em;
+            }
+            .contact-item {
+                width: 100%; /* Lebarkan item kontak */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="snow-container"></div> <div class="container">
+        <header>
+            <h1>Ryzyy Store</h1>
+            <p>Your premier destination for Virtual Numbers (Nokos) and Elite Share Services.</p>
+        </header>
+
+        <div class="section">
+            <h2>Our Nokos Catalog</h2>
+            <ul>
+                <li><span>Indonesian 🇮🇩 (+62)</span> <span class="price">4K</span></li>
+                <li><span>Afganistan 🇦🇫 (+93)</span> <span class="price">17K</span></li>
+                <li><span>Angola 🇦🇴 (+244)</span> <span class="price">10K</span></li>
+                <li><span>Philippines 🇵🇭 (+63)</span> <span class="price">6K</span></li>
+                <li><span>Usa 🇺🇸 (+1)</span> <span class="price">30K</span></li>
+                <li><span>Russia 🇷🇺 (+7)</span> <span class="price">15K</span></li>
+                <li><span>China 🇨🇳 (+86)</span> <span class="price">20K</span></li>
+                <li><span>Vietnam (+84)</span> <span class="price">8K</span></li>
+                <li><span>Argentina 🇦🇷 (+54)</span> <span class="price">15K</span></li>
+                <li><span>Canada 🇨🇦 (+1)</span> <span class="price">14K</span></li>
+                <li><span>Hongkong 🇭🇰 (+852)</span> <span class="price">10K</span></li>
+                <li><span>Laos 🇱🇦 (+856)</span> <span class="price">11K</span></li>
+                <li><span>Brazil 🇧🇷</span> <span class="price">25K</span></li>
+            </ul>
+            <p class="note"><em>Seeking numbers from other regions? Reach out to inquire about our current stock!</em></p>
+        </div>
+
+        <div class="section">
+            <h2>Exclusive Share Packages</h2>
+
+            <div class="owner-jasher">
+                <h3>🔱 OWNER JASHER PUBLIC 15K 🔱</h3>
+                <ul class="feature-list">
+                    <li>DI ADD 1+ BOT PRIBADI</li>
+                    <li>DISHARE 160+ CH [NO GIMMICK]</li>
+                    <li>BISA OPEN JASHER</li>
+                    <li>BISA PP/PUSH CH MU</li>
+                    <li>BISA PP/PUSH GB MU</li>
+                    <li>BISA PROMOSI TEKS MU</li>
+                    <li>BISA JUALAN TEKS MU</li>
+                    <li>BISA PROMOSI BEBAS</li>
+                    <li>PASTI DI URUS</li>
+                    <li>JEDA 15 MENIT</li>
+                </ul>
+            </div>
+
+            <div class="owner-jasher private">
+                <h3>⚡ OWNER JASHER PRIVATE 25K ⚡</h3>
+                <ul class="feature-list">
+                    <li>DI ADD 1+ BOT PRIBADI</li>
+                    <li>DISHARE 160+ CH [NO GIMMICK]</li>
+                    <li>BISA PP/PUSH CH MU</li>
+                    <li>BISA PP/PUSH GB MU</li>
+                    <li>BISA PROMOSI TEKS MU</li>
+                    <li>BISA JUALAN TEKS MU</li>
+                    <li>BISA PROMOSI BEBAS</li>
+                    <li>JEDA 10 MENIT</li>
+                    <li>BEBAS PROMOSI</li>
+                    <li>BOT RAME</li>
+                    <li>TEKS MU AUTO GACOR</li>
+                    <li>PASTI DI URUS</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="qris-section">
+            <h2>Seamless QRIS Payment</h2>
+            <img src="https://files.catbox.moe/vd4x4x.jpg" alt="QRIS Payment TOKO MISBAHH OK2491841">
+            <div class="qris-info">
+                <p><strong>TOKO MISBAHH OK2491841</strong></p>
+                <p>NMID: ID2025411000180</p>
+                <em>One QRIS for all your transactions. Verify via: <a href="https://www.aspl-qris.id" target="_blank">www.aspl-qris.id</a></em>
+            </div>
+        </div>
+
+        <div class="contact-info">
+            <h2>Connect With Us</h2>
+            <div class="contact-group">
+                <div class="contact-item">
+                    <p><strong>DANA:</strong> <span class="dana-number">083822557139</span></p>
+                </div>
+                <div class="contact-item">
+                    <p><strong>Testimonials:</strong></p>
+                    <a href="https://whatsapp.com/channel/0029VbADoUB3bbV8Jq9YVI3G" class="channel-button" target="_blank">Join Our WhatsApp Channel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const snowContainer = document.querySelector('.snow-container');
+            const numberOfSnowflakes = 100; // Jumlah salju
+
+            for (let i = 0; i < numberOfSnowflakes; i++) {
+                const snow = document.createElement('div');
+                snow.classList.add('snow');
+                
+                const size = Math.random() * 5 + 2; // Ukuran 2px - 7px
+                snow.style.width = `${size}px`;
+                snow.style.height = `${size}px`;
+
+                const startPositionX = Math.random() * 100 + 'vw';
+                snow.style.left = startPositionX;
+                
+                const animationDuration = Math.random() * 10 + 5; // Durasi 5s - 15s
+                snow.style.animationDuration = `${animationDuration}s`;
+                
+                const animationDelay = Math.random() * 10; // Delay 0s - 10s
+                snow.style.animationDelay = `${animationDelay}s`;
+
+                const randomXEnd = (Math.random() - 0.5) * 200; // -100px sampai 100px
+                snow.style.setProperty('--random-x-end', `${randomXEnd}px`);
+
+                snowContainer.appendChild(snow);
+            }
+        });
+    </script>
+</body>
+</html>
